@@ -192,6 +192,16 @@ class FormForForm(forms.ModelForm):
                 text = field.placeholder_text
                 self.fields[field_key].widget.attrs["placeholder"] = text
 
+    def as_p(self):
+        "Returns this form rendered as HTML <p>s."
+        form_html = self._html_output(
+            normal_row = u'<p%(html_class_attr)s>%(label)s %(field)s%(help_text)s</p>',
+            error_row = u'%s',
+            row_ender = '</p>',
+            help_text_html = u' <span class="helptext">%s</span>',
+            errors_on_separate_row = True)
+        return _(form_html)
+
     def save(self, **kwargs):
         """
         Get/create a FormEntry instance and assign submitted values to
